@@ -1,0 +1,12 @@
+{
+  "task.maid_mana_source.mana_source": "Mana Source",
+  "task.maid_mana_source.mana_source.desc": "Collect mana from mana source",
+  "gui.maid_mana_source.no": "No",
+  "gui.maid_mana_source.yes": "Yes",
+  "gui.maid_mana_source.charge_mode": "Charge Mode",
+  "gui.maid_mana_source.charge_mode.single": "Single",
+  "gui.maid_mana_source.charge_mode.multi": "Multi",
+  "gui.maid_mana_source.charge_strategy": "Charge Strategy",
+  "gui.maid_mana_source.charge_strategy.polling": "Polling",
+  "gui.maid_mana_source.charge_strategy.sequential": "Sequential"
+}

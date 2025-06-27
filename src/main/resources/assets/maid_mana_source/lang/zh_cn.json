@@ -1,0 +1,12 @@
+{
+  "task.maid_mana_source.mana_source": "魔源",
+  "task.maid_mana_source.mana_source.desc": "让女仆成为魔源",
+  "gui.maid_mana_source.no": "No",
+  "gui.maid_mana_source.yes": "Yes",
+  "gui.maid_mana_source.charge_mode": "充能模式",
+  "gui.maid_mana_source.charge_mode.single": "单独",
+  "gui.maid_mana_source.charge_mode.multi": "批量",
+  "gui.maid_mana_source.charge_strategy": "充能策略",
+  "gui.maid_mana_source.charge_strategy.polling": "轮询",
+  "gui.maid_mana_source.charge_strategy.sequential": "顺序"
+}
