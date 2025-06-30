@@ -176,9 +176,17 @@ dependencies {
     compileOnly fg.deobf("curse.maven:touhou-little-maid-355044:6596061")
     compileOnly fg.deobf("curse.maven:ars-nouveau-401955:5894609")
 
+    // 前置
+    runtimeOnly fg.deobf("curse.maven:guideme-1173950:6679102")
     runtimeOnly fg.deobf("curse.maven:curios-309927:6058834")
-    runtimeOnly fg.deobf("curse.maven:ars-nouveau-401955:5894609")
+    runtimeOnly fg.deobf("curse.maven:patchouli-306770:6164575")
+
     runtimeOnly fg.deobf("curse.maven:touhou-little-maid-355044:6596061")
+    runtimeOnly fg.deobf("curse.maven:ars-nouveau-401955:5894609")
+    runtimeOnly fg.deobf("curse.maven:botania-225643:6366547")
+    runtimeOnly fg.deobf("curse.maven:applied-energistics-2-223794:6629570")
+    runtimeOnly fg.deobf("curse.maven:ars-energistique-905641:5504444")
+    runtimeOnly fg.deobf("curse.maven:ars-botania-1194681:6608957")
 
 }
 

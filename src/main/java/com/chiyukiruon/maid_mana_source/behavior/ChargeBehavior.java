@@ -42,7 +42,6 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
                 .map(SourceJarMemory::getJars)
                 .orElse(List.of())
                 .stream()
-                .filter(pos -> level.getBlockEntity(pos) instanceof ISourceTile)
                 .toList();
 
         if (knownJars.isEmpty()) return;
@@ -56,6 +55,16 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
 
         int chargeThisTime = Config.maxPerCharge;
         int chargeAmount = TargetUtil.getChargeAmount(level, knownJars);
+        int coolingTime = Config.coolingTime;
+
+        if (Config.enableFavorEffect) {
+            int maidFavorLevel = maid.getFavorabilityManager().getLevel();
+            chargeThisTime += maidFavorLevel * Config.favorChargeBonus;
+            coolingTime -= maidFavorLevel * Config.favorCooldownReduction;
+
+            chargeThisTime = Math.max(chargeThisTime, 0);
+            coolingTime = Math.max(coolingTime, 0);
+        }
 
         // 批量充能
         if (!chargeMode && knownJars.size() > 1 && chargeAmount != 0) {
@@ -70,7 +79,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
                 }
             }
 
-            COOLDOWNS.put(maid.getId(), currentTime + Config.coolingTime);
+            COOLDOWNS.put(maid.getId(), currentTime + coolingTime);
             return;
         }
 
@@ -88,7 +97,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
             if (jar.canAcceptSource()) {
                 MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
                 doCharge(level, pos, chargeThisTime);
-                COOLDOWNS.put(maid.getId(), currentTime + Config.coolingTime);
+                COOLDOWNS.put(maid.getId(), currentTime + coolingTime);
             }
 
             maid.getBrain().setMemory(MemoryModuleRegistry.CHARGE_INDEX.get(), (index + 1) % knownJars.size());
@@ -100,7 +109,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
                 if (jar.canAcceptSource()) {
                     MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
                     doCharge(level, pos, chargeThisTime);
-                    COOLDOWNS.put(maid.getId(), currentTime + Config.coolingTime);
+                    COOLDOWNS.put(maid.getId(), currentTime + coolingTime);
                     break;
                 }
             }

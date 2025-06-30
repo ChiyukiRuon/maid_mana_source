@@ -14,7 +14,7 @@ public class Config {
             .defineInRange("coolingTime", 200, 0, Integer.MAX_VALUE);
     private static final ForgeConfigSpec.IntValue MAX_PER_CHARGE = BUILDER
             .comment("The base maximum mana amount added to source jar per charge")
-            .defineInRange("maxPerCharge", 500, 0, Integer.MAX_VALUE);
+            .defineInRange("maxPerCharge", 200, 0, Integer.MAX_VALUE);
     private static final ForgeConfigSpec.IntValue SCAN_INTERVAL = BUILDER
             .comment("Interval between source jar searches (in ticks)")
             .defineInRange("scanInterval", 200, 1, Integer.MAX_VALUE);
@@ -26,7 +26,7 @@ public class Config {
             .defineInRange("favorChargeBonus", 100, Integer.MIN_VALUE, Integer.MAX_VALUE);
     private static final ForgeConfigSpec.IntValue FAVOR_COOLDOWN_REDUCTION = BUILDER
             .comment("Cooldown reduction (in ticks) per levels (only effective if enableFavorEffect = true)")
-            .defineInRange("favorCooldownReduction", 10, Integer.MIN_VALUE, Integer.MAX_VALUE);
+            .defineInRange("favorCooldownReduction", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 

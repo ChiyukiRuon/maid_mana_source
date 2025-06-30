@@ -37,7 +37,7 @@ public class ScanBehavior extends Behavior<EntityMaid> {
                     .map(BlockPos::immutable)
                     .filter(pos -> pos.getY() >= center.getY()
                             && pos.distSqr(center) <= radiusSq
-                            && TargetUtil.isTargetBlock(level, pos, sourceJarBlock))
+                            && TargetUtil.canCharge(level, pos))
                     .toList();
 
             MemoryUtil.setSourceJarMemory(maid, nearbyJars);

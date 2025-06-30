@@ -30,11 +30,18 @@ public class TargetUtil {
      * @author ChiyukiRuon
      * */
     public static boolean canCharge(ServerLevel level, BlockPos pos) {
-        ISourceTile tile = (ISourceTile) level.getBlockEntity(pos);
+        try {
+            var blockEntity = level.getBlockEntity(pos);
+            if (blockEntity instanceof ISourceTile tile) {
+                return tile.canAcceptSource();
+            }
+        } catch (Exception e) {
+            System.err.println("canCharge error at " + pos + ": " + e);
+        }
 
-        if (tile == null) return false;
-        return tile.canAcceptSource();
+        return false;
     }
+
 
     /**
      * 获取可充能的魔源数量
