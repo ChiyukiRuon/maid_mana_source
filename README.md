@@ -2,9 +2,7 @@
 
 简体中文 | [English](README_EN.md)
 
-> 本项目目前处于开发阶段
-
-这是一个 [车万女仆(TLM)](https://github.com/TartaricAcid/TouhouLittleMaid) 与 [新生魔艺](https://github.com/baileyholl/Ars-Nouveau) 的联动模组，它为女仆添加了名为 "魔源" 的职业，让你的女仆可以给你的魔源罐充能。
+这是一个 [车万女仆(TLM)](https://github.com/TartaricAcid/TouhouLittleMaid) 与 [新生魔艺](https://github.com/baileyholl/Ars-Nouveau) 的联动模组，它为女仆添加了名为 "魔源" 的任务，让你的女仆可以给你的魔源罐充能。
 
 ---
 

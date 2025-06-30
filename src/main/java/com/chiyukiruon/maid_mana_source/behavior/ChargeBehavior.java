@@ -10,12 +10,9 @@ import com.chiyukiruon.maid_mana_source.util.TargetUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.hollingsworth.arsnouveau.api.source.ISourceTile;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +20,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ChargeBehavior extends Behavior<EntityMaid> {
-    private final Block sourceJarBlock
-            = ForgeRegistries.BLOCKS.getValue(new ResourceLocation("ars_nouveau", "source_jar"));
     private static final Map<Integer, Long> COOLDOWNS = new HashMap<>();
 
     public ChargeBehavior() {
@@ -33,7 +28,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, EntityMaid maid) {
-        return !maid.isSleeping() && sourceJarBlock != null;
+        return COOLDOWNS.getOrDefault(maid.getId(), 0L) < level.getGameTime();
     }
 
     @Override
@@ -47,7 +42,6 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
         if (knownJars.isEmpty()) return;
 
         long currentTime = level.getGameTime();
-        if (COOLDOWNS.getOrDefault(maid.getId(), 0L) > currentTime) return;
 
         MaidChargeConfig.Data config = maid.getOrCreateData(MaidChargeConfig.KEY, MaidChargeConfig.Data.getDefault());
         boolean chargeMode = config.chargeMode();

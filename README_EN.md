@@ -2,9 +2,7 @@
 
 [简体中文](README.md) | English
 
-> This project is currently under development.
-
-This is a crossover mod between [Touhou Little Maid (TLM)](https://github.com/TartaricAcid/TouhouLittleMaid) and [Ars Nouveau](https://github.com/baileyholl/Ars-Nouveau). It adds a new maid profession called "Mana Source", allowing your maid to charge Source Jars for you.
+This is a crossover mod between [Touhou Little Maid (TLM)](https://github.com/TartaricAcid/TouhouLittleMaid) and [Ars Nouveau](https://github.com/baileyholl/Ars-Nouveau). It adds a new maid task called "Mana Source", allowing your maid to charge Source Jars for you.
 
 ---
 

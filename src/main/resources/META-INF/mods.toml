@@ -23,9 +23,9 @@ displayName = "${mod_name}" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://docs.minecraftforge.net/en/latest/misc/updatechecker/
 #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
-displayURL = "https://chiyukiruon.com" #optional
+displayURL = "https://github.com/ChiyukiRuon/maid_mana_source" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="maid_mana_source.png" #optional
+logoFile="/assets/maid_mana_source/image/maid_mana_source_logo.png" #optional
 # A text field displayed in the mod UI
 #credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
@@ -61,3 +61,15 @@ mandatory = true
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies."${mod_id}"]]
+modId = "touhou_little_maid"
+mandatory = true
+versionRange="[1.2.2,)"
+ordering="AFTER"
+side="BOTH"
+[[dependencies."${mod_id}"]]
+modId = "ars_nouveau"
+mandatory = true
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"

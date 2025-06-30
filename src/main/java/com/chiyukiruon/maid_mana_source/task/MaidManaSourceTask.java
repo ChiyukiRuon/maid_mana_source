@@ -6,6 +6,7 @@ import com.chiyukiruon.maid_mana_source.behavior.ScanBehavior;
 import com.chiyukiruon.maid_mana_source.menu.MaidChargeConfigGui;
 import com.github.tartaricacid.touhoulittlemaid.api.task.IMaidTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
+import com.hollingsworth.arsnouveau.setup.registry.BlockRegistry;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,9 +17,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -26,7 +24,6 @@ import java.util.List;
 
 public class MaidManaSourceTask implements IMaidTask {
     public static final ResourceLocation UID = new ResourceLocation(MaidManaSource.MODID, "mana_source");
-    private static final Logger log = LogManager.getLogger(MaidManaSourceTask.class);
 
     @Override
     public ResourceLocation getUid() {
@@ -35,7 +32,7 @@ public class MaidManaSourceTask implements IMaidTask {
 
     @Override
     public ItemStack getIcon() {
-        return Items.ENDER_EYE.getDefaultInstance();
+        return BlockRegistry.CREATIVE_SOURCE_JAR.asItem().getDefaultInstance();
     }
 
     @Nullable
