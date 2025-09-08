@@ -1,0 +1,16 @@
+{
+  "sortnum": 1,
+  "name": "About Maid Mana Source",
+  "icon": "ars_nouveau:creative_source_jar",
+  "category": "touhou_little_maid:maid_mana_source",
+  "pages": [
+    {
+      "type": "text",
+      "text": "Welcome to Maid Mana Source! :)$(br2)Maid Mana Source adds a new task for maids called \"Mana\". When a maid's task is set to \"Mana\", she will scan for Source Jars within her work area and charge them."
+    },
+    {
+      "type": "text",
+      "text": "In fact, by default, besides Source Jars, any block that can store mana will be a target for the maid to charge, such as $(item)Imbuement Chamber$(), $(item)Source Relay$(), etc. You can use the $(l:maid_mana_source/3_source_list#source_list)$(item)Source List$(/l) to specify which blocks the maid can charge."
+    }
+  ]
+}

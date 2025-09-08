@@ -1,0 +1,38 @@
+{
+  "sortnum": 3,
+  "name": "Source List",
+  "icon": "maid_mana_source:source_list",
+  "category": "touhou_little_maid:maid_mana_source",
+  "pages": [
+    {
+      "type": "spotlight",
+      "anchor": "source_list",
+      "item": "maid_mana_source:source_list",
+      "text": "The $(#009AFF)Source List$() needs to be $(bold)bound to a maid$() to be used. Using the Source List, you can control whether the maid charges the Source Jars within her work area, and you can also edit their charging order."
+    },
+    {
+      "type": "text",
+      "title": "Binding and Unbinding",
+      "text": "$(#009AFF)$(k:use)$() on a maid to bind her. When binding, it will synchronize all chargeable blocks currently scanned by the maid.;$(br2)Use $(#009AFF)$(k:sneak)$() + $(#009AFF)$(k:use)$() to unbind."
+    },
+    {
+      "type": "text",
+      "title": "Forbid Charging",
+      "text": "After binding a maid, when holding the Source List in your hand, all chargeable blocks within the maid's work area will be highlighted in white. At this time, using $(#009AFF)$(k:use)$() on a highlighted block will set it to the $(#FF0000)Forbid Charging$() state, and it will be highlighted in red.$(br2)After finishing adjustments, place the source list into the maid's bauble slot, and the maid will ignore blocks set to \"Forbid Charging\" when charging.$(br2)Holding the Source List and using $(#009AFF)$(k:use)$() on a block set to \"Forbid Charging\" will restore the maid's charging for that block."
+    },
+    {
+      "type": "text",
+      "title": "Adjust Charging Order",
+      "text": "After binding a maid, when holding the Source List in your hand, it will also display that block's charging order above the block. Aim at a highlighted block and use $(#009AFF)$(k:maid_mana_source.sort_source)$() + $(#009AFF)$(k:pickItem)$() to adjust that block's charging order.$(br2)After finishing adjustments, place the source list into the maid's bauble slot, and the maid will charge in the order you have set."
+    },
+    {
+      "type": "text",
+      "title": "Memory Synchronization",
+      "text": "When the Source List is placed in the maid's bauble slot, it will synchronize the chargeable blocks scanned by the maid in real-time. If new chargeable blocks are added, they will be added directly to the end of the list and will be chargeable by the maid by default.$(br2)Changing a block's position will be treated as adding a new block."
+    },
+    {
+      "type": "altar_recipe",
+      "recipe_id": "maid_mana_source:source_list"
+    }
+  ]
+}

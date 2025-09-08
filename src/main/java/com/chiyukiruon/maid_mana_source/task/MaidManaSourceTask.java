@@ -3,6 +3,7 @@ package com.chiyukiruon.maid_mana_source.task;
 import com.chiyukiruon.maid_mana_source.MaidManaSource;
 import com.chiyukiruon.maid_mana_source.behavior.ChargeBehavior;
 import com.chiyukiruon.maid_mana_source.behavior.ScanBehavior;
+import com.chiyukiruon.maid_mana_source.behavior.SortBehavior;
 import com.chiyukiruon.maid_mana_source.menu.MaidChargeConfigGui;
 import com.github.tartaricacid.touhoulittlemaid.api.task.IMaidTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
@@ -17,6 +18,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -26,42 +28,43 @@ public class MaidManaSourceTask implements IMaidTask {
     public static final ResourceLocation UID = new ResourceLocation(MaidManaSource.MODID, "mana_source");
 
     @Override
-    public ResourceLocation getUid() {
+    public @NotNull ResourceLocation getUid() {
         return UID;
     }
 
     @Override
-    public ItemStack getIcon() {
+    public @NotNull ItemStack getIcon() {
         return BlockRegistry.CREATIVE_SOURCE_JAR.asItem().getDefaultInstance();
     }
 
     @Nullable
     @Override
-    public SoundEvent getAmbientSound(EntityMaid entityMaid) {
+    public SoundEvent getAmbientSound(@NotNull EntityMaid entityMaid) {
         return null;
     }
 
     @Override
-    public MenuProvider getTaskConfigGuiProvider(EntityMaid maid) {
+    public @NotNull MenuProvider getTaskConfigGuiProvider(@NotNull EntityMaid maid) {
         return new MenuProvider() {
             @Override
-            public Component getDisplayName() {
+            public @NotNull Component getDisplayName() {
                 return Component.literal("");
             }
 
             @Override
-            public AbstractContainerMenu createMenu(int index, Inventory playerInventory, Player player) {
+            public AbstractContainerMenu createMenu(int index, @NotNull Inventory playerInventory, @NotNull Player player) {
                 return new MaidChargeConfigGui.Container(index, playerInventory, maid.getId());
             }
         };
     }
 
     @Override
-    public List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(EntityMaid entityMaid) {
+    public @NotNull List<Pair<Integer, BehaviorControl<? super EntityMaid>>> createBrainTasks(@NotNull EntityMaid entityMaid) {
         List<Pair<Integer, BehaviorControl<? super EntityMaid>>> list = new ArrayList<>();
 
         list.add(Pair.of(0, new ScanBehavior()));
-        list.add(Pair.of(1, new ChargeBehavior()));
+        list.add(Pair.of(1, new SortBehavior()));
+        list.add(Pair.of(2, new ChargeBehavior()));
         return list;
     }
 }

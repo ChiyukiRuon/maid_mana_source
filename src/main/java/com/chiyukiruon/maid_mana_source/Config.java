@@ -27,6 +27,9 @@ public class Config {
     private static final ForgeConfigSpec.IntValue FAVOR_COOLDOWN_REDUCTION = BUILDER
             .comment("Cooldown reduction (in ticks) per levels (only effective if enableFavorEffect = true)")
             .defineInRange("favorCooldownReduction", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    private static final ForgeConfigSpec.BooleanValue ENABLE_HIGHLIGHT_PENETRATION = BUILDER
+            .comment("If true, highlights will show through the blocks")
+            .define("enableHighlightPenetration", true);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -36,6 +39,7 @@ public class Config {
     public static boolean enableFavorEffect;
     public static int favorChargeBonus;
     public static int favorCooldownReduction;
+    public static boolean enableHighlightPenetration;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -45,5 +49,6 @@ public class Config {
         enableFavorEffect = ENABLE_FAVOR_EFFECT.get();
         favorChargeBonus = FAVOR_CHARGE_BONUS.get();
         favorCooldownReduction = FAVOR_COOLDOWN_REDUCTION.get();
+        enableHighlightPenetration = ENABLE_HIGHLIGHT_PENETRATION.get();
     }
 }

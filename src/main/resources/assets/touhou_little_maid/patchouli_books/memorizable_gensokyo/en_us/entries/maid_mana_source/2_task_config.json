@@ -1,0 +1,26 @@
+{
+  "sortnum": 2,
+  "name": "Task Config",
+  "icon": "ars_nouveau:dominion_wand",
+  "category": "touhou_little_maid:maid_mana_source",
+  "pages": [
+    {
+      "type": "text",
+      "text": "When the maid's task is set to \"Mana\", you can configure her $(#009AFF)charge mode$() and $(#009AFF)charge strategy$() in her task config."
+    },
+    {
+      "type": "text",
+      "title": "Charge Mode",
+      "text": "The $(#009AFF)charge mode$() determines whether the maid charges a single Source Jar or multiple Source Jars at one time.$(br)$(li)$(bold)Single$() (Default): The maid only charges one Source Jar at a time, and enters a cooldown after charging;$(li)$(bold)Multi$(): The maid charges all chargeable Source Jars within her work area at once, but the mana will be $(bold)distributed equally$() among them."
+    },
+    {
+      "type": "text",
+      "title": "Charge Strategy",
+      "text": "The $(#009AFF)charge strategy$() $(bold)only takes effect when the charge mode is set to \"Single\"$().$(br)$(li)$(bold)Polling$() (Default): The maid charges each Source Jar in turn;$(li)$(bold)Sequential$(): The maid only charges the next Source Jar after the previous one is full. If the previous Source Jar consumes mana again after being filled, the maid will prioritize charging the previous Source Jar."
+    },
+    {
+      "type": "empty",
+      "draw_filler": false
+    }
+  ]
+}

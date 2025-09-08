@@ -1,0 +1,38 @@
+{
+  "sortnum": 3,
+  "name": "魔源列表",
+  "icon": "maid_mana_source:source_list",
+  "category": "touhou_little_maid:maid_mana_source",
+  "pages": [
+    {
+      "type": "spotlight",
+      "anchor": "source_list",
+      "item": "maid_mana_source:source_list",
+      "text": "$(#009AFF)魔源列表$()需要$(bold)绑定女仆$()使用。使用魔源列表可以控制女仆是否对工作范围内的魔源罐进行充能，并且可以编辑工作范围内魔源罐的充能顺序。"
+    },
+    {
+      "type": "text",
+      "title": "绑定与解绑",
+      "text": "对女仆$(#009AFF)$(k:use)$()来绑定女仆，绑定时会同步女仆当前扫描的所有可充能方块；$(br2)使用$(#009AFF)$(k:sneak)$()+$(#009AFF)$(k:use)$()来解除绑定"
+    },
+    {
+      "type": "text",
+      "title": "禁止充能",
+      "text": "绑定女仆后，将魔源列表拿在手上时，女仆工作范围内的所有可充能方块就会以白色高亮显示。此时$(#009AFF)$(k:use)$()高亮方块，可以将对应的方块设为$(#FF0000)禁止充能$()状态，以红色高亮显示。$(br2)调整完后将魔源列表放入女仆的饰品栏，女仆在充能时会忽略禁止充能的方块。$(br2)手持魔源列表对准禁止充能的方块$(#009AFF)$(k:use)$()可以恢复女仆对方块的充能。"
+    },
+    {
+      "type": "text",
+      "title": "调整充能顺序",
+      "text": "绑定女仆后，将魔源列表拿在手上时，还会在方块上方显示该方块的充能顺序。对准高亮方块，使用$(#009AFF)$(k:maid_mana_source.sort_source)$()+$(#009AFF)$(k:pickItem)$()即可调整该方块的充能顺序。$(br2)调整完后将魔源列表放入女仆的饰品栏，女仆会按照你调整的顺序进行充能。"
+    },
+    {
+      "type": "text",
+      "title": "记忆同步",
+      "text": "当魔源列表放在女仆的饰品栏中时，会实时同步女仆扫描的可充能方块。如果新增可充能方块，则会直接添加到列表中，排在最后并且默认女仆可以充能。$(br2)改变方块位置将会被视为新增。"
+    },
+    {
+      "type": "altar_recipe",
+      "recipe_id": "maid_mana_source:source_list"
+    }
+  ]
+}

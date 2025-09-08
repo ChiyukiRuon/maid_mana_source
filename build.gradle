@@ -173,7 +173,7 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    compileOnly fg.deobf("curse.maven:touhou-little-maid-355044:6596061")
+    compileOnly fg.deobf("curse.maven:touhou-little-maid-355044:6911704")
     compileOnly fg.deobf("curse.maven:ars-nouveau-401955:5894609")
 
     // 前置
@@ -181,7 +181,9 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:curios-309927:6058834")
     runtimeOnly fg.deobf("curse.maven:patchouli-306770:6164575")
 
-    runtimeOnly fg.deobf("curse.maven:touhou-little-maid-355044:6596061")
+    runtimeOnly fg.deobf("curse.maven:imblocker-483760:6922546")
+    runtimeOnly fg.deobf("curse.maven:touhou-little-maid-355044:6911704")
+    runtimeOnly fg.deobf("curse.maven:maid-storage-manager-1210244:6936862")
     runtimeOnly fg.deobf("curse.maven:ars-nouveau-401955:5894609")
     runtimeOnly fg.deobf("curse.maven:botania-225643:6366547")
     runtimeOnly fg.deobf("curse.maven:applied-energistics-2-223794:6629570")

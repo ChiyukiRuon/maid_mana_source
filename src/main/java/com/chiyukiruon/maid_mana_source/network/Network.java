@@ -14,6 +14,7 @@ import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class Network {
+    static int id = 0;
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(MaidManaSource.MODID, "mut_packets"),
@@ -23,12 +24,22 @@ public class Network {
     );
 
     private static void registerMessage() {
-        Network.INSTANCE.registerMessage(0,
+        Network.INSTANCE.registerMessage(id++,
                 MaidConfigurePacket.class,
                 MaidConfigurePacket::toBytes,
                 MaidConfigurePacket::new,
                 (msg, context) -> {
                     context.get().enqueueWork(() -> MaidConfigurePacket.handle(msg, context));
+                    context.get().setPacketHandled(true);
+                }
+        );
+
+        Network.INSTANCE.registerMessage(id++,
+                SortSourcePacket.class,
+                SortSourcePacket::toBytes,
+                SortSourcePacket::new,
+                (msg, context) -> {
+                    context.get().enqueueWork(() -> SortSourcePacket.handle(msg, context));
                     context.get().setPacketHandled(true);
                 }
         );

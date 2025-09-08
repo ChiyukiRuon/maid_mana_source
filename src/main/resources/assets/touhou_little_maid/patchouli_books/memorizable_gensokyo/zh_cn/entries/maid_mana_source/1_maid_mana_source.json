@@ -1,0 +1,16 @@
+{
+  "sortnum": 1,
+  "name": "关于女仆魔源",
+  "icon": "ars_nouveau:creative_source_jar",
+  "category": "touhou_little_maid:maid_mana_source",
+  "pages": [
+    {
+      "type": "text",
+      "text": "欢迎使用女仆魔源:)$(br2)女仆魔源为女仆添加了名为“魔源”的任务。当女仆的任务被设定为“魔源”时，女仆会扫描工作范围内的魔源罐并为其充能。"
+    },
+    {
+      "type": "text",
+      "text": "事实上，在默认配置下，除了魔源罐以外，任何能够存储魔力的方块都会成为女仆充能的目标，例如$(item)灌注室$()、$(item)魔源中继器$()等。你可以使用$(l:maid_mana_source/3_source_list#source_list)$(item)魔源列表$(/l)来指定女仆可访问的方块。"
+    }
+  ]
+}

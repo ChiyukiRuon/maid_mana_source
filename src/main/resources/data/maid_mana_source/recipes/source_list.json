@@ -1,0 +1,21 @@
+{
+  "type": "touhou_little_maid:altar_crafting",
+  "output": {
+    "type": "minecraft:item",
+    "nbt": {
+      "Item": {
+        "id": "maid_mana_source:source_list",
+        "Count": 1
+      }
+    }
+  },
+  "power": 0,
+  "ingredients": [
+    {
+      "item": "ars_nouveau:source_gem"
+    },
+    {
+      "item": "ars_nouveau:blank_parchment"
+    }
+  ]
+}

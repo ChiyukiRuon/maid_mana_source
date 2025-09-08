@@ -1,11 +1,11 @@
 package com.chiyukiruon.maid_mana_source.behavior;
 
 import com.chiyukiruon.maid_mana_source.Config;
+import com.chiyukiruon.maid_mana_source.advancement.AdvancementTypes;
 import com.chiyukiruon.maid_mana_source.data.MaidChargeConfig;
-import com.chiyukiruon.maid_mana_source.memory.SourceJarMemory;
+import com.chiyukiruon.maid_mana_source.memory.ChargeSourceListMemory;
 import com.chiyukiruon.maid_mana_source.registry.MemoryModuleRegistry;
 import com.chiyukiruon.maid_mana_source.util.MaidAiUtil;
-import com.chiyukiruon.maid_mana_source.util.MemoryUtil;
 import com.chiyukiruon.maid_mana_source.util.TargetUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.hollingsworth.arsnouveau.api.source.ISourceTile;
@@ -13,6 +13,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fml.ModList;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,9 +35,9 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
     }
 
     @Override
-    protected void start(ServerLevel level, EntityMaid maid, long gameTime) {
-        List<BlockPos> knownJars = Optional.ofNullable(MemoryUtil.getSourceJarMemory(maid))
-                .map(SourceJarMemory::getJars)
+    protected void start(@NotNull ServerLevel level, @NotNull EntityMaid maid, long gameTime) {
+        List<BlockPos> knownJars = Optional.ofNullable(ChargeSourceListMemory.getMemory(maid))
+                .map(ChargeSourceListMemory::getJars)
                 .orElse(List.of())
                 .stream()
                 .toList();
@@ -69,7 +72,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
                 if (jar == null) continue;
                 if (jar.canAcceptSource()) {
                     MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
-                    doCharge(level, pos, chargeThisTime);
+                    doCharge(maid, level, pos, chargeThisTime);
                 }
             }
 
@@ -90,7 +93,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
             }
             if (jar.canAcceptSource()) {
                 MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
-                doCharge(level, pos, chargeThisTime);
+                doCharge(maid, level, pos, chargeThisTime);
                 COOLDOWNS.put(maid.getId(), currentTime + coolingTime);
             }
 
@@ -102,7 +105,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
                 if (jar ==  null) continue;
                 if (jar.canAcceptSource()) {
                     MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
-                    doCharge(level, pos, chargeThisTime);
+                    doCharge(maid, level, pos, chargeThisTime);
                     COOLDOWNS.put(maid.getId(), currentTime + coolingTime);
                     break;
                 }
@@ -111,12 +114,20 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
 
     }
 
-    private void doCharge(ServerLevel level, BlockPos pos, int charge) {
+    private void doCharge(EntityMaid maid, ServerLevel level, BlockPos pos, int charge) {
         BlockEntity block = level.getBlockEntity(pos);
+        BlockState state = level.getBlockState(pos);
 
         if (block instanceof ISourceTile sourceTile) {
+            if (!sourceTile.canAcceptSource()) return;
             sourceTile.addSource(charge);
-            level.levelEvent(2005, pos, 0); // 播放粒子
+            level.levelEvent(2005, pos, 0);
+            if (ModList.get().isLoaded("botania") && ModList.get().isLoaded("ars_botania")) {
+                if (TargetUtil.isBlockFromMod(state, "botania")) {
+                    AdvancementTypes.triggerForMaid(maid, AdvancementTypes.CHARGE_MANA_POOL);
+                }
+            }
+            AdvancementTypes.triggerForMaid(maid, AdvancementTypes.MAID_CHARGE);
         }
     }
 }

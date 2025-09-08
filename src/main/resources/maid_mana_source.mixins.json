@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "maid_mana_source.refmap.json",
   "mixins": [
+    "LevelRendererAccessor"
   ],
   "client": [
   ],

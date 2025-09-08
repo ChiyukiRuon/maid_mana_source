@@ -1,0 +1,35 @@
+{
+  "parent": "maid_mana_source:maid_charge",
+  "criteria": {
+    "maid_event": {
+      "conditions": {
+        "event": "charge_mana_pool"
+      },
+      "trigger": "touhou_little_maid:maid/tamed_maid"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "background": "touhou_little_maid:textures/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.maid_mana_source.charge_mana_pool.desc"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "botania:mana_pool"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.maid_mana_source.charge_mana_pool.title"
+    }
+  },
+  "requirements": [
+    [
+      "maid_event"
+    ]
+  ],
+  "rewards": {
+  },
+  "sends_telemetry_event": true
+}
