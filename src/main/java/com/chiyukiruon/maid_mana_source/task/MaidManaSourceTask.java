@@ -4,6 +4,7 @@ import com.chiyukiruon.maid_mana_source.MaidManaSource;
 import com.chiyukiruon.maid_mana_source.behavior.ChargeBehavior;
 import com.chiyukiruon.maid_mana_source.behavior.ScanBehavior;
 import com.chiyukiruon.maid_mana_source.behavior.SortBehavior;
+import com.chiyukiruon.maid_mana_source.behavior.TaskSoundBehavior;
 import com.chiyukiruon.maid_mana_source.menu.MaidChargeConfigGui;
 import com.github.tartaricacid.touhoulittlemaid.api.task.IMaidTask;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaidManaSourceTask implements IMaidTask {
-    public static final ResourceLocation UID = new ResourceLocation(MaidManaSource.MODID, "mana_source");
+    public static final ResourceLocation UID = ResourceLocation.fromNamespaceAndPath(MaidManaSource.MODID, "mana_source");
 
     @Override
     public @NotNull ResourceLocation getUid() {
@@ -65,6 +66,7 @@ public class MaidManaSourceTask implements IMaidTask {
         list.add(Pair.of(0, new ScanBehavior()));
         list.add(Pair.of(1, new SortBehavior()));
         list.add(Pair.of(2, new ChargeBehavior()));
+        list.add(Pair.of(3, new TaskSoundBehavior()));
         return list;
     }
 }

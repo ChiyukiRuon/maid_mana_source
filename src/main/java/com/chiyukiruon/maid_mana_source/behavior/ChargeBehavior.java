@@ -10,7 +10,10 @@ import com.chiyukiruon.maid_mana_source.util.TargetUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import com.hollingsworth.arsnouveau.api.source.ISourceTile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -114,20 +117,40 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
 
     }
 
-    private void doCharge(EntityMaid maid, ServerLevel level, BlockPos pos, int charge) {
+    private void doCharge(EntityMaid maid, @NotNull ServerLevel level, BlockPos pos, int charge) {
         BlockEntity block = level.getBlockEntity(pos);
         BlockState state = level.getBlockState(pos);
 
         if (block instanceof ISourceTile sourceTile) {
             if (!sourceTile.canAcceptSource()) return;
             sourceTile.addSource(charge);
-            level.levelEvent(2005, pos, 0);
+            level.sendParticles(
+                    ParticleTypes.HAPPY_VILLAGER,
+                    pos.getX() + 0.5,
+                    pos.getY() + 0.5,
+                    pos.getZ() + 0.5,
+                    Config.chargeParticleCount,
+                    Config.chargeParticleRadius,
+                    Config.chargeParticleRadius,
+                    Config.chargeParticleRadius,
+                    0.01
+            );
             if (ModList.get().isLoaded("botania") && ModList.get().isLoaded("ars_botania")) {
                 if (TargetUtil.isBlockFromMod(state, "botania")) {
                     AdvancementTypes.triggerForMaid(maid, AdvancementTypes.CHARGE_MANA_POOL);
                 }
             }
             AdvancementTypes.triggerForMaid(maid, AdvancementTypes.MAID_CHARGE);
+            if (!sourceTile.canAcceptSource() && Config.chargingCompletedSound) {
+                level.playSound(
+                        null,
+                        pos,
+                        SoundEvents.EXPERIENCE_ORB_PICKUP,
+                        SoundSource.BLOCKS,
+                        1.0f,
+                        1.0f
+                );
+            }
         }
     }
 }

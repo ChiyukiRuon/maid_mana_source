@@ -17,7 +17,7 @@ public class Network {
     static int id = 0;
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MaidManaSource.MODID, "mut_packets"),
+            ResourceLocation.fromNamespaceAndPath(MaidManaSource.MODID, "mut_packets"),
             () -> PROTOCOL_VERSION,
             (v) -> true,
             (v) -> true

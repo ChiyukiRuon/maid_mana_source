@@ -25,15 +25,19 @@
 
 ## 配置文件
 
-| 配置项                          | 类型      | 默认值     | 说明                                 |
-|------------------------------|---------|---------|------------------------------------|
-| `coolingTime`                | int     | `200`   | 每次充能后的基础冷却时间（单位：tick）              |
-| `maxPerCharge`               | int     | `200`   | 每次充能最多添加到魔源罐的魔力值                   |
-| `scanInterval`               | int     | `200`   | 魔女仆自动搜索魔源罐的间隔时间（单位：tick）           |
-| `enableFavorEffect`          | boolean | `false` | 是否启用好感度影响充能效率与冷却时间                 |
-| `favorChargeBonus`           | int     | `100`   | 每级好感度增加的额外充能量（仅在启用好感度功能时生效）        |
-| `favorCooldownReduction`     | int     | `20`    | 每级好感度减少的冷却时间（单位：tick，仅在启用好感度功能时生效） |
-| `enableHighlightPenetration` | boolean | `true`  | 高亮是否穿透方块渲染                         |
+| 配置项                          | 类型        | 默认值     | 说明                                 |
+|------------------------------|-----------|---------|------------------------------------|
+| `coolingTime`                | `int`     | `200`   | 每次充能后的基础冷却时间（单位：tick）              |
+| `maxPerCharge`               | `int`     | `200`   | 每次充能最多添加到魔源罐的魔力值                   |
+| `scanInterval`               | `int`     | `200`   | 魔女仆自动搜索魔源罐的间隔时间（单位：tick）           |
+| `enableFavorEffect`          | `boolean` | `false` | 是否启用好感度影响充能效率与冷却时间                 |
+| `favorChargeBonus`           | `int`     | `100`   | 每级好感度增加的额外充能量（仅在启用好感度功能时生效）        |
+| `favorCooldownReduction`     | `int`     | `20`    | 每级好感度减少的冷却时间（单位：tick，仅在启用好感度功能时生效） |
+| `enableHighlightPenetration` | `boolean` | `true`  | 高亮是否穿透方块渲染                         |
+| `chargeParticleCount`        | `int`     | `20`    | 充能时的粒子播放数量                         |
+| `chargeParticleRadius`       | `double`  | `0.5`   | 充能时的粒子播放半径                         |
+| `maidTaskSound`              | `boolean` | `true`  | 女仆开始/结束充能时播放语音                     |
+| `chargingCompletedSound`     | `boolean` | `true`  | 充满每个魔源罐时播放音效                       |
 
 ## 植物魔法支持
 

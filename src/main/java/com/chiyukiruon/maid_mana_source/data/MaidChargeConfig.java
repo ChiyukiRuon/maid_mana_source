@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MaidChargeConfig implements TaskDataKey<MaidChargeConfig.Data> {
     public static TaskDataKey<Data> KEY = null;
-    public static final ResourceLocation LOCATION = new ResourceLocation(MaidManaSource.MODID, "charge_config");
+    public static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(MaidManaSource.MODID, "charge_config");
 
     @Override
     public ResourceLocation getKey() {

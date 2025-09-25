@@ -25,15 +25,19 @@ After selecting Mana Source as the maid's task, the following settings are avail
 
 ## Configuration
 
-| Config                       | Type    | Default | Description                                                       |
-|------------------------------|---------|---------|-------------------------------------------------------------------|
-| `coolingTime`                | int     | `200`   | Base cooldown time (in ticks) after each mana charging action     |
-| `maxPerCharge`               | int     | `200`   | Maximum mana amount added to a source jar per charge              |
-| `scanInterval`               | int     | `200`   | Interval (in ticks) between maid scanning for nearby source jars  |
-| `enableFavorEffect`          | boolean | `false` | Whether maid's favorability affects charging amount and cooldown  |
-| `favorChargeBonus`           | int     | `100`   | Extra mana added per favorability level (requires favor effect)   |
-| `favorCooldownReduction`     | int     | `20`    | Cooldown reduction per favorability level (requires favor effect) |
-| `enableHighlightPenetration` | boolean | `true`  | Whether highlights show through the blocks                        |
+| Config                       | Type      | Default | Description                                                       |
+|------------------------------|-----------|---------|-------------------------------------------------------------------|
+| `coolingTime`                | `int`     | `200`   | Base cooldown time (in ticks) after each mana charging action     |
+| `maxPerCharge`               | `int`     | `200`   | Maximum mana amount added to a source jar per charge              |
+| `scanInterval`               | `int`     | `200`   | Interval (in ticks) between maid scanning for nearby source jars  |
+| `enableFavorEffect`          | `boolean` | `false` | Whether maid's favorability affects charging amount and cooldown  |
+| `favorChargeBonus`           | `int`     | `100`   | Extra mana added per favorability level (requires favor effect)   |
+| `favorCooldownReduction`     | `int`     | `20`    | Cooldown reduction per favorability level (requires favor effect) |
+| `enableHighlightPenetration` | `boolean` | `true`  | Whether highlights show through the blocks                        |
+| `chargeParticleCount`        | `int`     | `20`    | The number of particles to be displayed when charging             |
+| `chargeParticleRadius`       | `double`  | `0.5`   | The radius of the particles to be displayed when charging         |
+| `maidTaskSound`              | `boolean` | `true`  | Maid voice & text reminders for charge start/finish               |
+| `chargingCompletedSound`     | `boolean` | `true`  | Play a sound effect when each Source Jar is filled                |
 
 ## Botania Support
 

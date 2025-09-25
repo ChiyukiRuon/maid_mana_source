@@ -30,6 +30,18 @@ public class Config {
     private static final ForgeConfigSpec.BooleanValue ENABLE_HIGHLIGHT_PENETRATION = BUILDER
             .comment("If true, highlights will show through the blocks")
             .define("enableHighlightPenetration", true);
+    public static final ForgeConfigSpec.IntValue CHARGE_PARTICLE_COUNT = BUILDER
+            .comment("The number of particles to be displayed when charging")
+            .defineInRange("chargeParticleCount", 20, 0, Integer.MAX_VALUE);
+    public static final ForgeConfigSpec.DoubleValue CHARGE_PARTICLE_RADIUS = BUILDER
+            .comment("The radius of the particles to be displayed when charging")
+            .defineInRange("chargeParticleRadius", 0.5, 0.0, Double.MAX_VALUE);
+    public static final ForgeConfigSpec.BooleanValue MAID_TASK_SOUND = BUILDER
+            .comment("If true, maid will play sound when starting and ending tasks")
+            .define("maidTaskSound", true);
+    public static final ForgeConfigSpec.BooleanValue CHARGING_COMPLETED_SOUND = BUILDER
+            .comment("If true, a sound will be played when the Source Jar is fully charged.")
+            .define("chargingCompletedSound", true);
 
     static final ForgeConfigSpec SPEC = BUILDER.build();
 
@@ -40,6 +52,10 @@ public class Config {
     public static int favorChargeBonus;
     public static int favorCooldownReduction;
     public static boolean enableHighlightPenetration;
+    public static int chargeParticleCount;
+    public static double chargeParticleRadius;
+    public static boolean maidTaskSound;
+    public static boolean chargingCompletedSound;
 
     @SubscribeEvent
     static void onLoad(final ModConfigEvent event) {
@@ -50,5 +66,9 @@ public class Config {
         favorChargeBonus = FAVOR_CHARGE_BONUS.get();
         favorCooldownReduction = FAVOR_COOLDOWN_REDUCTION.get();
         enableHighlightPenetration = ENABLE_HIGHLIGHT_PENETRATION.get();
+        chargeParticleCount = CHARGE_PARTICLE_COUNT.get();
+        chargeParticleRadius = CHARGE_PARTICLE_RADIUS.get();
+        maidTaskSound = MAID_TASK_SOUND.get();
+        chargingCompletedSound = CHARGING_COMPLETED_SOUND.get();
     }
 }
