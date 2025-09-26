@@ -17,7 +17,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -135,11 +134,11 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
                     Config.chargeParticleRadius,
                     0.01
             );
-            if (ModList.get().isLoaded("botania") && ModList.get().isLoaded("ars_botania")) {
-                if (TargetUtil.isBlockFromMod(state, "botania")) {
-                    AdvancementTypes.triggerForMaid(maid, AdvancementTypes.CHARGE_MANA_POOL);
-                }
-            }
+//            if (ModList.get().isLoaded("botania") && ModList.get().isLoaded("ars_botania")) {
+//                if (TargetUtil.isBlockFromMod(state, "botania")) {
+//                    AdvancementTypes.triggerForMaid(maid, AdvancementTypes.CHARGE_MANA_POOL);
+//                }
+//            }
             AdvancementTypes.triggerForMaid(maid, AdvancementTypes.MAID_CHARGE);
             if (!sourceTile.canAcceptSource() && Config.chargingCompletedSound) {
                 level.playSound(

@@ -2,7 +2,6 @@ package com.chiyukiruon.maid_mana_source.client.key;
 
 import com.chiyukiruon.maid_mana_source.MaidManaSource;
 import com.chiyukiruon.maid_mana_source.network.Network;
-import com.chiyukiruon.maid_mana_source.network.SortSourcePacket;
 import com.chiyukiruon.maid_mana_source.registry.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -10,14 +9,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.InputEvent;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = MaidManaSource.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MaidManaSource.MODID, value = Dist.CLIENT)
 public class ScrollHandler {
     @SubscribeEvent
     public static void onScroll(InputEvent.MouseScrollingEvent event) {
@@ -41,10 +40,10 @@ public class ScrollHandler {
         BlockPos pos = blockHit.getBlockPos();
 
         // 滚轮方向
-        int direction = event.getScrollDelta() > 0 ? 1 : -1;
+        int direction = event.getScrollDeltaY() > 0 ? 1 : -1;
 
         // 发包给服务端
-        Network.INSTANCE.sendToServer(new SortSourcePacket(pos, direction));
+        Network.sendSortSourcePacket(pos, direction);
 
         // 拦截默认物品栏切换
         event.setCanceled(true);

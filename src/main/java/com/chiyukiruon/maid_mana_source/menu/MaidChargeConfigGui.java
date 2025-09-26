@@ -2,6 +2,7 @@ package com.chiyukiruon.maid_mana_source.menu;
 
 import com.chiyukiruon.maid_mana_source.data.MaidChargeConfig;
 import com.chiyukiruon.maid_mana_source.network.MaidConfigurePacket;
+import com.chiyukiruon.maid_mana_source.network.Network;
 import com.chiyukiruon.maid_mana_source.registry.GuiRegistry;
 import com.chiyukiruon.maid_mana_source.util.TranslateUtil;
 import com.github.tartaricacid.touhoulittlemaid.client.gui.entity.maid.task.MaidTaskConfigGui;
@@ -43,12 +44,12 @@ public class MaidChargeConfigGui extends MaidTaskConfigGui<MaidChargeConfigGui.C
                 button -> {
                     this.currentData.setChargeMode(false);
                     button.setValue(TranslateUtil.getBooleanTranslate(false, "chargeMode"));
-                    MaidConfigurePacket.send(this.maid, MaidChargeConfig.LOCATION, "chargeMode", "false");
+                    Network.sendMaidConfigurePacket(MaidConfigurePacket.Type.chargeMode, this.maid.getId(), false);
                 },
                 button -> {
                     this.currentData.setChargeMode(true);
                     button.setValue(TranslateUtil.getBooleanTranslate(true, "chargeMode"));
-                    MaidConfigurePacket.send(this.maid, MaidChargeConfig.LOCATION, "chargeMode", "true");
+                    Network.sendMaidConfigurePacket(MaidConfigurePacket.Type.chargeMode, this.maid.getId(), true);
                 }
         ));
         this.addRenderableWidget(new MaidConfigButton(startLeft, startTop + 13,
@@ -57,12 +58,12 @@ public class MaidChargeConfigGui extends MaidTaskConfigGui<MaidChargeConfigGui.C
                 button -> {
                     this.currentData.setChargeStrategy(false);
                     button.setValue(TranslateUtil.getBooleanTranslate(false, "chargeStrategy"));
-                    MaidConfigurePacket.send(this.maid, MaidChargeConfig.LOCATION, "chargeStrategy", "false");
+                    Network.sendMaidConfigurePacket(MaidConfigurePacket.Type.chargeStrategy, this.maid.getId(), false);
                 },
                 button -> {
                     this.currentData.setChargeStrategy(true);
                     button.setValue(TranslateUtil.getBooleanTranslate(true, "chargeStrategy"));
-                    MaidConfigurePacket.send(this.maid, MaidChargeConfig.LOCATION, "chargeStrategy", "true");
+                    Network.sendMaidConfigurePacket(MaidConfigurePacket.Type.chargeStrategy, this.maid.getId(), true);
                 }
         ));
     }

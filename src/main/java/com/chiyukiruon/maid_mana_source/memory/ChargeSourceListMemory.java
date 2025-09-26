@@ -31,23 +31,17 @@ public class ChargeSourceListMemory {
     );
 
     public static ChargeSourceListMemory getMemory(EntityMaid maid) {
-        if (MemoryModuleRegistry.CHARGE_SOURCE_LIST.isPresent()) {
-            return maid.getBrain().getMemory(MemoryModuleRegistry.CHARGE_SOURCE_LIST.get()).orElse(null);
-        }
-        return null;
+        return maid.getBrain().getMemory(MemoryModuleRegistry.CHARGE_SOURCE_LIST.get()).orElse(null);
     }
 
     public static void setMemory(EntityMaid maid, List<BlockPos> jars) {
-        MemoryModuleRegistry.CHARGE_SOURCE_LIST.ifPresent(module ->
-                maid.getBrain().setMemory(module, new ChargeSourceListMemory(jars))
-        );
+        maid.getBrain().setMemory(MemoryModuleRegistry.CHARGE_SOURCE_LIST.get(), new ChargeSourceListMemory(jars));
     }
 
     public static void clearMemory(EntityMaid maid) {
-        MemoryModuleRegistry.CHARGE_SOURCE_LIST.ifPresent(module ->
-                maid.getBrain().eraseMemory(module)
-        );
+        maid.getBrain().eraseMemory(MemoryModuleRegistry.CHARGE_SOURCE_LIST.get());
     }
+
 }
 
 

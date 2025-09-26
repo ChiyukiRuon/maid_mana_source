@@ -1,32 +1,32 @@
 {
-  "parent": "touhou_little_maid:maid_base/switch_schedule",
+  "parent": "maid_mana_source:mana_source",
   "criteria": {
-    "maid_event": {
+    "altar_craft": {
       "conditions": {
-        "event": "mana_source"
+        "recipe_id": "maid_mana_source:source_list"
       },
-      "trigger": "touhou_little_maid:maid/tamed_maid"
+      "trigger": "touhou_little_maid:altar_craft"
     }
   },
   "display": {
     "announce_to_chat": true,
     "background": "touhou_little_maid:textures/advancements/backgrounds/stone.png",
     "description": {
-      "translate": "advancements.maid_mana_source.mana_source.desc"
+      "translate": "advancements.maid_mana_source.source_list.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "ars_nouveau:creative_source_jar"
+      "id": "maid_mana_source:source_list"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.maid_mana_source.mana_source.title"
+      "translate": "advancements.maid_mana_source.source_list.title"
     }
   },
   "requirements": [
     [
-      "maid_event"
+      "altar_craft"
     ]
   ],
   "rewards": {

@@ -5,6 +5,7 @@ import com.chiyukiruon.maid_mana_source.entry.SortedSourceJarEntry;
 import com.chiyukiruon.maid_mana_source.item.ItemSourceList;
 import com.chiyukiruon.maid_mana_source.memory.ChargeSourceListMemory;
 import com.chiyukiruon.maid_mana_source.memory.ScannedSourceListMemory;
+import com.chiyukiruon.maid_mana_source.util.NBTUtil;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +37,7 @@ public class SortBehavior extends Behavior<EntityMaid> {
         ItemStack sourceListItem = ItemSourceList.getSourceList(maid);
         if (sourceListItem.isEmpty()) return;
 
-        CompoundTag tag = sourceListItem.getOrCreateTag();
+        CompoundTag tag = NBTUtil.getOrCreateTag(sourceListItem);
         ListTag listTag = tag.getList("SourceList", Tag.TAG_COMPOUND);
 
         List<SortedSourceJarEntry> stored = new ArrayList<>();
@@ -79,6 +80,7 @@ public class SortBehavior extends Behavior<EntityMaid> {
             newListTag.add(entry);
         }
         tag.put("SourceList", newListTag);
+        NBTUtil.setTag(sourceListItem, tag);
 
         ChargeSourceListMemory.setMemory(maid, finalList);
     }

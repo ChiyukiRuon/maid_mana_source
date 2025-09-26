@@ -34,16 +34,11 @@ public class ScannedSourceListMemory {
     );
 
     public static ScannedSourceListMemory getMemory(EntityMaid maid) {
-        if (MemoryModuleRegistry.SCANNED_SOURCE_LIST.isPresent()) {
-            return maid.getBrain().getMemory(MemoryModuleRegistry.SCANNED_SOURCE_LIST.get()).orElse(null);
-        }
-        return null;
+        return maid.getBrain().getMemory(MemoryModuleRegistry.SCANNED_SOURCE_LIST.get()).orElse(null);
     }
 
     public static void setMemory(EntityMaid maid, List<BlockPos> jars) {
-        MemoryModuleRegistry.SCANNED_SOURCE_LIST.ifPresent(module ->
-                maid.getBrain().setMemory(module, new ScannedSourceListMemory(jars))
-        );
+        maid.getBrain().setMemory(MemoryModuleRegistry.SCANNED_SOURCE_LIST.get(), new ScannedSourceListMemory(jars));
     }
 
     public static @NotNull ListTag initializeSourceListNBT(EntityMaid maid) {

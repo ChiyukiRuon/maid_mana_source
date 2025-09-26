@@ -5,7 +5,7 @@
       "conditions": {
         "event": "maid_charge"
       },
-      "trigger": "touhou_little_maid:maid/tamed_maid"
+      "trigger": "touhou_little_maid:maid_event"
     }
   },
   "display": {
@@ -17,7 +17,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "ars_nouveau:source_jar"
+      "id": "ars_nouveau:source_jar"
     },
     "show_toast": true,
     "title": {

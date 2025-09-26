@@ -1,0 +1,20 @@
+{
+  "type": "touhou_little_maid:altar_recipe_serializers",
+  "entity": "minecraft:item",
+  "group": "altar_recipe",
+  "category": "misc",
+  "lang": "jei.touhou_little_maid.altar_craft.item_craft.result",
+  "result": {
+    "id": "maid_mana_source:source_list",
+    "count": 1
+  },
+  "power": 0,
+  "ingredients": [
+    {
+      "item": "ars_nouveau:source_gem"
+    },
+    {
+      "item": "ars_nouveau:blank_parchment"
+    }
+  ]
+}

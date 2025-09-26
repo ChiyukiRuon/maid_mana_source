@@ -2,13 +2,13 @@ package com.chiyukiruon.maid_mana_source.util;
 
 import com.hollingsworth.arsnouveau.api.source.ISourceTile;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.List;
 
@@ -23,13 +23,10 @@ public class TargetUtil {
     public static boolean isBlockFromMod(BlockState state, String modid) {
         if (modid == null || modid.isEmpty()) return false;
         Block block = state.getBlock();
-        ResourceLocation registryName = ForgeRegistries.BLOCKS.getKey(block);
+        ResourceLocation registryName = BuiltInRegistries.BLOCK.getKey(block);
 
-        if (registryName != null) {
-            return registryName.getNamespace().equals(modid);
-        }
+        return registryName.getNamespace().equals(modid);
 
-        return false;
     }
 
     /**

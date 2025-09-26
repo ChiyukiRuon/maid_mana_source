@@ -1,27 +1,27 @@
 {
-  "parent": "maid_mana_source:source_list",
+  "parent": "touhou_little_maid:maid_base/switch_schedule",
   "criteria": {
     "maid_event": {
       "conditions": {
-        "event": "disable_all_source"
+        "event": "mana_source"
       },
-      "trigger": "touhou_little_maid:maid/tamed_maid"
+      "trigger": "touhou_little_maid:maid_event"
     }
   },
   "display": {
     "announce_to_chat": true,
     "background": "touhou_little_maid:textures/advancements/backgrounds/stone.png",
     "description": {
-      "translate": "advancements.maid_mana_source.disable_all_source.desc"
+      "translate": "advancements.maid_mana_source.mana_source.desc"
     },
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "minecraft:barrier"
+      "id": "ars_nouveau:creative_source_jar"
     },
     "show_toast": true,
     "title": {
-      "translate": "advancements.maid_mana_source.disable_all_source.title"
+      "translate": "advancements.maid_mana_source.mana_source.title"
     }
   },
   "requirements": [

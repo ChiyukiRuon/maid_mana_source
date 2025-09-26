@@ -1,56 +1,52 @@
 package com.chiyukiruon.maid_mana_source.network;
 
-import com.chiyukiruon.maid_mana_source.data.IConfigSetter;
-import com.chiyukiruon.maid_mana_source.data.MaidConfigKeys;
-import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
-import net.minecraft.network.FriendlyByteBuf;
+import com.chiyukiruon.maid_mana_source.MaidManaSource;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Supplier;
+public class MaidConfigurePacket implements CustomPacketPayload {
 
-public class MaidConfigurePacket {
-    final public int maidId;
-    final public String name;
-    final public String value;
-    final public ResourceLocation key;
+    public static final CustomPacketPayload.Type<MaidConfigurePacket> TYPE = new CustomPacketPayload.Type<>(
+            ResourceLocation.fromNamespaceAndPath(MaidManaSource.MODID, "maid_configure")
+    );
 
-    public MaidConfigurePacket(int maidId, ResourceLocation key, String name, String value) {
+    @Override
+    public CustomPacketPayload.@NotNull Type<MaidConfigurePacket> type() {
+        return TYPE;
+    }
+
+    public static StreamCodec<ByteBuf, MaidConfigurePacket> STREAM_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8,
+            t -> t.type.name(),
+            ByteBufCodecs.INT,
+            t -> t.maidId,
+            ByteBufCodecs.BOOL,
+            t -> t.value,
+            MaidConfigurePacket::new
+    );
+
+    public enum Type {
+        chargeMode,
+        chargeStrategy,
+    }
+
+    public final Type type;
+    public final int maidId;
+    public final Boolean value;
+
+    public MaidConfigurePacket(Type type, int maidId, Boolean value) {
+        this.type = type;
         this.maidId = maidId;
-        this.key = key;
-        this.name = name;
         this.value = value;
     }
 
-    public MaidConfigurePacket(FriendlyByteBuf buffer) {
-        this.maidId = buffer.readInt();
-        this.key = ResourceLocation.tryParse(buffer.readUtf());
-        this.name = buffer.readUtf();
-        this.value = buffer.readUtf();
-    }
-
-    public void toBytes(FriendlyByteBuf buffer) {
-        buffer.writeInt(maidId);
-        buffer.writeUtf(key.toString());
-        buffer.writeUtf(name);
-        buffer.writeUtf(value);
-    }
-
-    public static void handle(MaidConfigurePacket msg, Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
-        @Nullable ServerPlayer sender = context.getSender();
-        if (sender != null) {
-            if (sender.level().getEntity(msg.maidId) instanceof EntityMaid entityMaid) {
-                if (MaidConfigKeys.getValue(entityMaid, msg.key) instanceof IConfigSetter ics) {
-                    ics.setConfigValue(msg.name, msg.value);
-                }
-            }
-        }
-    }
-
-    public static void send(EntityMaid maid, ResourceLocation key, String name, String value) {
-        Network.INSTANCE.sendToServer(new MaidConfigurePacket(maid.getId(), key, name, value));
+    public MaidConfigurePacket(String type, int maidId, Boolean value) {
+        this.type = Type.valueOf(type);
+        this.maidId = maidId;
+        this.value = value;
     }
 }

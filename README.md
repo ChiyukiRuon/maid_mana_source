@@ -1,5 +1,8 @@
 # 女仆魔源
 
+> [!NOTE]  
+> 这是 1.21.1 neoforge 版本的文档，1.20.1 forge 的文档请看[这里](https://github.com/ChiyukiRuon/maid_mana_source/blob/main/README.md)
+
 简体中文 | [English](README_EN.md)
 
 这是一个 [车万女仆(TLM)](https://github.com/TartaricAcid/TouhouLittleMaid) 与 [新生魔艺](https://github.com/baileyholl/Ars-Nouveau) 的联动模组，它为女仆添加了名为 "魔源" 的任务，让你的女仆可以给你的魔源罐充能。
@@ -33,15 +36,13 @@
 | `enableFavorEffect`          | `boolean` | `false` | 是否启用好感度影响充能效率与冷却时间                 |
 | `favorChargeBonus`           | `int`     | `100`   | 每级好感度增加的额外充能量（仅在启用好感度功能时生效）        |
 | `favorCooldownReduction`     | `int`     | `20`    | 每级好感度减少的冷却时间（单位：tick，仅在启用好感度功能时生效） |
-| `enableHighlightPenetration` | `boolean` | `true`  | 高亮是否穿透方块渲染                         |
+| `enableHighlightPenetration` | `boolean` | `true`  | 高亮与提示文本是否穿透方块渲染                    |
+| `listOverlayYOffset`         | `double`  | `1.3`   | 提示文本的Y轴偏移量                         |
+| `numbersOnly`                | `boolean` | `false` | 提示文本只显示数字                          |
 | `chargeParticleCount`        | `int`     | `20`    | 充能时的粒子播放数量                         |
 | `chargeParticleRadius`       | `double`  | `0.5`   | 充能时的粒子播放半径                         |
 | `maidTaskSound`              | `boolean` | `true`  | 女仆开始/结束充能时播放语音                     |
 | `chargingCompletedSound`     | `boolean` | `true`  | 充满每个魔源罐时播放音效                       |
-
-## 植物魔法支持
-
-通过安装 [Ars Botania](https://github.com/zxy19/ars_botania) 可对植物魔法的魔力池进行充能
 
 ## 鸣谢
 - [TartaricAcid](https://github.com/TartaricAcid)

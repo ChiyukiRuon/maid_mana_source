@@ -1,69 +1,72 @@
 package com.chiyukiruon.maid_mana_source.network;
 
-import com.chiyukiruon.maid_mana_source.MaidManaSource;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import com.chiyukiruon.maid_mana_source.data.MaidChargeConfig;
+import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 public class Network {
-    static int id = 0;
     private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            ResourceLocation.fromNamespaceAndPath(MaidManaSource.MODID, "mut_packets"),
-            () -> PROTOCOL_VERSION,
-            (v) -> true,
-            (v) -> true
-    );
 
-    private static void registerMessage() {
-        Network.INSTANCE.registerMessage(id++,
-                MaidConfigurePacket.class,
-                MaidConfigurePacket::toBytes,
-                MaidConfigurePacket::new,
+    public static void sendMaidConfigurePacket(MaidConfigurePacket.Type type, int maidId, Boolean value) {
+        PacketDistributor.sendToServer(new MaidConfigurePacket(type, maidId, value));
+    }
+
+    public static void sendSortSourcePacket(BlockPos pos, int direction) {
+        PacketDistributor.sendToServer(new SortSourcePacket(pos, direction));
+    }
+
+    // 注册所有数据包
+    private static void registerMessages(PayloadRegistrar registrar) {
+        // MaidConfigurePacket
+        registrar.playToServer(
+                MaidConfigurePacket.TYPE,
+                MaidConfigurePacket.STREAM_CODEC,
                 (msg, context) -> {
-                    context.get().enqueueWork(() -> MaidConfigurePacket.handle(msg, context));
-                    context.get().setPacketHandled(true);
+                    if (!(context.player() instanceof ServerPlayer sender)) return;
+                    Entity entity = sender.level().getEntity(msg.maidId);
+                    if (entity instanceof EntityMaid maid) {
+                        if (msg.type == MaidConfigurePacket.Type.chargeMode) {
+                            MaidChargeConfig.Data data = maid.getOrCreateData(
+                                    MaidChargeConfig.KEY,
+                                    MaidChargeConfig.Data.getDefault()
+                            );
+                            data.setChargeMode(msg.value);
+                            maid.setAndSyncData(MaidChargeConfig.KEY, data);
+                        }else if (msg.type == MaidConfigurePacket.Type.chargeStrategy) {
+                            MaidChargeConfig.Data data = maid.getOrCreateData(
+                                    MaidChargeConfig.KEY,
+                                    MaidChargeConfig.Data.getDefault()
+                            );
+                            data.setChargeStrategy(msg.value);
+                            maid.setAndSyncData(MaidChargeConfig.KEY, data);
+                        }
+                    }
                 }
         );
-
-        Network.INSTANCE.registerMessage(id++,
-                SortSourcePacket.class,
-                SortSourcePacket::toBytes,
-                SortSourcePacket::new,
+        // SortSourcePacket
+        registrar.playToServer(
+                SortSourcePacket.TYPE,
+                SortSourcePacket.STREAM_CODEC,
                 (msg, context) -> {
-                    context.get().enqueueWork(() -> SortSourcePacket.handle(msg, context));
-                    context.get().setPacketHandled(true);
+                    if (context.player() instanceof ServerPlayer sender) {
+                        context.enqueueWork(() -> SortSourcePacket.handle(msg, sender));
+                    }
                 }
         );
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static Player getLocalPlayer() {
-        return Minecraft.getInstance().player;
-    }
-
-    @Mod.EventBusSubscriber(modid = MaidManaSource.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.DEDICATED_SERVER)
-    public static class Server {
+    @EventBusSubscriber
+    public static class ModEvents {
         @SubscribeEvent
-        public static void FMLClientSetupEvent(FMLDedicatedServerSetupEvent event) {
-            registerMessage();
+        public static void onRegisterPayloadHandlers(RegisterPayloadHandlersEvent event) {
+            registerMessages(event.registrar(PROTOCOL_VERSION));
         }
-    }
-
-    @Mod.EventBusSubscriber(modid = MaidManaSource.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class Client {
-        @SubscribeEvent
-        public static void FMLClientSetupEvent(FMLClientSetupEvent event) {
-            registerMessage();
-        }
-
     }
 }
