@@ -57,6 +57,10 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
         if (!maid.getTask().getUid().equals(MaidManaSourceTask.UID)) return;
         CompoundTag tag = stack.getTag();
         if (tag == null) return;
+        if (!tag.hasUUID("BoundMaid")) {
+            CompoundTag maidTag = new CompoundTag();
+            bindMaid(maid, tag, maidTag);
+        }
         if (!tag.getUUID("BoundMaid").equals(maid.getUUID())) return;
         if (!tag.getString("BoundMaidName").equals(maid.getName().getString())) {
             CompoundTag maidTag = new CompoundTag();
@@ -82,12 +86,7 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
                 }
                 return InteractionResult.PASS;
             } else {
-                maid.saveWithoutId(maidTag);
-                maidTag.putString("id", Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(InitEntities.MAID.get())).toString());
-                tag.put("MaidInfo", maidTag);
-                tag.putString("BoundMaidName", maid.getName().getString());
-                tag.putUUID("BoundMaid", maid.getUUID());
-                tag.put("SourceList", ScannedSourceListMemory.initializeSourceListNBT(maid));
+                bindMaid(maid, tag, maidTag);
                 player.displayClientMessage(
                         Component.translatable("tooltip.maid_mana_source.source_list.bind_success", maid.getName()),
                         true
@@ -165,6 +164,15 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
             tooltip.add(Component.translatable("tooltip.maid_mana_source.source_list.not_bound").withStyle(ChatFormatting.ITALIC));
         }
 
+    }
+
+    private void bindMaid(@NotNull EntityMaid maid, @NotNull CompoundTag tag, CompoundTag maidTag) {
+        maid.saveWithoutId(maidTag);
+        maidTag.putString("id", Objects.requireNonNull(ForgeRegistries.ENTITY_TYPES.getKey(InitEntities.MAID.get())).toString());
+        tag.put("MaidInfo", maidTag);
+        tag.putString("BoundMaidName", maid.getName().getString());
+        tag.putUUID("BoundMaid", maid.getUUID());
+        tag.put("SourceList", ScannedSourceListMemory.initializeSourceListNBT(maid));
     }
 
     private static void updateSourceList(@NotNull ItemStack stack, BlockPos pos) {

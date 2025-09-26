@@ -9,6 +9,7 @@ import net.minecraftforge.fml.event.config.ModConfigEvent;
 public class Config {
     private static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
+    // 充能行为设置
     private static final ForgeConfigSpec.IntValue COOLING_TIME = BUILDER
             .comment("The base cooldown time (in ticks) after each mana charging action")
             .defineInRange("coolingTime", 200, 0, Integer.MAX_VALUE);
@@ -27,19 +28,27 @@ public class Config {
     private static final ForgeConfigSpec.IntValue FAVOR_COOLDOWN_REDUCTION = BUILDER
             .comment("Cooldown reduction (in ticks) per levels (only effective if enableFavorEffect = true)")
             .defineInRange("favorCooldownReduction", 20, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    // 显示设置
     private static final ForgeConfigSpec.BooleanValue ENABLE_HIGHLIGHT_PENETRATION = BUILDER
             .comment("If true, highlights will show through the blocks")
             .define("enableHighlightPenetration", true);
-    public static final ForgeConfigSpec.IntValue CHARGE_PARTICLE_COUNT = BUILDER
+    private static final ForgeConfigSpec.DoubleValue LIST_OVERLAY_TEXT_Y_OFFSET = BUILDER
+            .comment("The Y offset of the charging number display")
+            .defineInRange("chargeParticleInterval", 1.3, Double.MIN_VALUE, Double.MAX_VALUE);
+    private static final ForgeConfigSpec.BooleanValue NUMBERS_ONLY = BUILDER
+            .comment("If true, only numbers will be displayed")
+            .define("numbersOnly", false);
+    private static final ForgeConfigSpec.IntValue CHARGE_PARTICLE_COUNT = BUILDER
             .comment("The number of particles to be displayed when charging")
             .defineInRange("chargeParticleCount", 20, 0, Integer.MAX_VALUE);
-    public static final ForgeConfigSpec.DoubleValue CHARGE_PARTICLE_RADIUS = BUILDER
+    private static final ForgeConfigSpec.DoubleValue CHARGE_PARTICLE_RADIUS = BUILDER
             .comment("The radius of the particles to be displayed when charging")
             .defineInRange("chargeParticleRadius", 0.5, 0.0, Double.MAX_VALUE);
-    public static final ForgeConfigSpec.BooleanValue MAID_TASK_SOUND = BUILDER
+    // 声音设置
+    private static final ForgeConfigSpec.BooleanValue MAID_TASK_SOUND = BUILDER
             .comment("If true, maid will play sound when starting and ending tasks")
             .define("maidTaskSound", true);
-    public static final ForgeConfigSpec.BooleanValue CHARGING_COMPLETED_SOUND = BUILDER
+    private static final ForgeConfigSpec.BooleanValue CHARGING_COMPLETED_SOUND = BUILDER
             .comment("If true, a sound will be played when the Source Jar is fully charged.")
             .define("chargingCompletedSound", true);
 
@@ -52,6 +61,8 @@ public class Config {
     public static int favorChargeBonus;
     public static int favorCooldownReduction;
     public static boolean enableHighlightPenetration;
+    public static double listOverlayYOffset;
+    public static boolean numbersOnly;
     public static int chargeParticleCount;
     public static double chargeParticleRadius;
     public static boolean maidTaskSound;
@@ -66,6 +77,8 @@ public class Config {
         favorChargeBonus = FAVOR_CHARGE_BONUS.get();
         favorCooldownReduction = FAVOR_COOLDOWN_REDUCTION.get();
         enableHighlightPenetration = ENABLE_HIGHLIGHT_PENETRATION.get();
+        listOverlayYOffset = LIST_OVERLAY_TEXT_Y_OFFSET.get();
+        numbersOnly = NUMBERS_ONLY.get();
         chargeParticleCount = CHARGE_PARTICLE_COUNT.get();
         chargeParticleRadius = CHARGE_PARTICLE_RADIUS.get();
         maidTaskSound = MAID_TASK_SOUND.get();

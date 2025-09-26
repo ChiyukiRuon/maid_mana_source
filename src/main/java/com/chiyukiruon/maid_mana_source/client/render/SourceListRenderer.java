@@ -1,28 +1,24 @@
 package com.chiyukiruon.maid_mana_source.client.render;
 
-import com.chiyukiruon.maid_mana_source.Config;
 import com.chiyukiruon.maid_mana_source.MaidManaSource;
-import com.chiyukiruon.maid_mana_source.mixin.LevelRendererAccessor;
 import com.chiyukiruon.maid_mana_source.registry.ItemRegistry;
+import com.hollingsworth.arsnouveau.api.source.ISourceTile;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = MaidManaSource.MODID, value = Dist.CLIENT)
-public class SourceListOutlineRenderer {
+public class SourceListRenderer {
     @SubscribeEvent
     public static void onRenderLevelLast(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_BLOCK_ENTITIES) {
@@ -51,35 +47,15 @@ public class SourceListOutlineRenderer {
             BlockPos pos = new BlockPos(entry.getInt("x"), entry.getInt("y"), entry.getInt("z"));
             boolean enabled = entry.getBoolean("enabled");
 
-            renderBlockOutline(poseStack, camera, pos, enabled ? 0xFFFFFFFF : 0xFFFF0000);
-            SourceListIndexLabelRenderer.renderIndexLabel(poseStack, camera, pos, i + 1, enabled);
+            if (!(player.level().getBlockEntity(pos) instanceof ISourceTile)) continue;
+
+            // 渲染方块轮廓
+            RenderHelper.renderBlockOutline(poseStack, camera, pos, enabled ? 0xFFFFFFFF : 0xFFFF0000);
+
+            // 渲染序号标签
+            RenderHelper.renderIndexLabel(event, pos, i + 1, enabled);
         }
-    }
 
-    private static void renderBlockOutline(PoseStack poseStack, Camera camera, BlockPos pos, int color) {
-        Minecraft mc = Minecraft.getInstance();
-        var level = mc.level;
-        if (level == null) return;
-
-        VoxelShape shape = level.getBlockState(pos).getShape(level, pos);
-        if (shape.isEmpty()) return;
-
-        double camX = camera.getPosition().x;
-        double camY = camera.getPosition().y;
-        double camZ = camera.getPosition().z;
-
-        poseStack.pushPose();
-        poseStack.translate(pos.getX() - camX, pos.getY() - camY, pos.getZ() - camZ);
-
-        float r = ((color >> 16) & 0xFF) / 255f;
-        float g = ((color >> 8) & 0xFF) / 255f;
-        float b = (color & 0xFF) / 255f;
-        float a = ((color >> 24) & 0xFF) / 255f;
-
-        boolean highlightPenetration = Config.enableHighlightPenetration;
-        VertexConsumer buffer = mc.renderBuffers().bufferSource().getBuffer(highlightPenetration ? OutlineNoDepthRenderType.getOutlineNoDepth() : RenderType.LINES);
-        LevelRendererAccessor.callRenderShape(poseStack, buffer, shape, 0, 0, 0, r, g, b, a);
-
-        poseStack.popPose();
+        mc.renderBuffers().bufferSource().endBatch();
     }
 }

@@ -24,6 +24,10 @@ public class SortBehavior extends Behavior<EntityMaid> {
 
     @Override
     protected boolean checkExtraStartConditions(@NotNull ServerLevel level, @NotNull EntityMaid maid) {
+        ItemStack sourceListItem = ItemSourceList.getSourceList(maid);
+        CompoundTag tag = sourceListItem.getOrCreateTag();
+        if (sourceListItem.isEmpty()) return false;
+        if (!tag.hasUUID("BoundMaid")) return false;
         return ChargeSourceListMemory.getMemory(maid) != null;
     }
 
@@ -34,8 +38,6 @@ public class SortBehavior extends Behavior<EntityMaid> {
         List<BlockPos> scannedJars = new ArrayList<>(scanned.getJars());
 
         ItemStack sourceListItem = ItemSourceList.getSourceList(maid);
-        if (sourceListItem.isEmpty()) return;
-
         CompoundTag tag = sourceListItem.getOrCreateTag();
         ListTag listTag = tag.getList("SourceList", Tag.TAG_COMPOUND);
 

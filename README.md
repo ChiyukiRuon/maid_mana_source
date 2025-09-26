@@ -33,7 +33,9 @@
 | `enableFavorEffect`          | `boolean` | `false` | 是否启用好感度影响充能效率与冷却时间                 |
 | `favorChargeBonus`           | `int`     | `100`   | 每级好感度增加的额外充能量（仅在启用好感度功能时生效）        |
 | `favorCooldownReduction`     | `int`     | `20`    | 每级好感度减少的冷却时间（单位：tick，仅在启用好感度功能时生效） |
-| `enableHighlightPenetration` | `boolean` | `true`  | 高亮是否穿透方块渲染                         |
+| `enableHighlightPenetration` | `boolean` | `true`  | 高亮与提示文本是否穿透方块渲染                    |
+| `listOverlayYOffset`         | `double`  | `1.3`   | 提示文本的Y轴偏移量                         |
+| `numbersOnly`                | `boolean` | `false` | 提示文本只显示数字                          |
 | `chargeParticleCount`        | `int`     | `20`    | 充能时的粒子播放数量                         |
 | `chargeParticleRadius`       | `double`  | `0.5`   | 充能时的粒子播放半径                         |
 | `maidTaskSound`              | `boolean` | `true`  | 女仆开始/结束充能时播放语音                     |
