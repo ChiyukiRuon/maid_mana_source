@@ -6,6 +6,7 @@ import com.chiyukiruon.maid_mana_source.task.MaidManaSourceTask;
 import com.chiyukiruon.maid_mana_source.util.NBTUtil;
 import com.github.tartaricacid.touhoulittlemaid.api.bauble.IMaidBauble;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
+import com.github.tartaricacid.touhoulittlemaid.init.InitDataComponent;
 import com.github.tartaricacid.touhoulittlemaid.init.InitEntities;
 import com.github.tartaricacid.touhoulittlemaid.inventory.handler.BaubleItemHandler;
 import com.github.tartaricacid.touhoulittlemaid.item.AbstractStoreMaidItem;
@@ -23,8 +24,10 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -58,13 +61,16 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
         if (!maid.getTask().getUid().equals(MaidManaSourceTask.UID)) return;
         CompoundTag tag = NBTUtil.getTag(stack);
         if (tag == null) return;
-        if (!tag.hasUUID("BoundMaid")) return;
+        if (!tag.hasUUID("BoundMaid")) {
+            CompoundTag maidTag = new CompoundTag();
+            bindMaid(maid, tag, maidTag, stack);
+        }
         if (!tag.getUUID("BoundMaid").equals(maid.getUUID())) return;
         if (!tag.getString("BoundMaidName").equals(maid.getName().getString())) {
             CompoundTag maidTag = new CompoundTag();
             maid.saveWithoutId(maidTag);
             maidTag.putString("id", Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(InitEntities.MAID.get())).toString());
-            tag.put("MaidInfo", maidTag);
+            stack.set(InitDataComponent.MAID_INFO, CustomData.of(maidTag));
             tag.putString("BoundMaidName", maid.getName().getString());
             NBTUtil.setTag(stack, tag);
         }
@@ -85,13 +91,7 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
                 }
                 return InteractionResult.PASS;
             } else {
-                maid.saveWithoutId(maidTag);
-                maidTag.putString("id", Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(InitEntities.MAID.get())).toString());
-                tag.put("MaidInfo", maidTag);
-                tag.putString("BoundMaidName", maid.getName().getString());
-                tag.putUUID("BoundMaid", maid.getUUID());
-                tag.put("SourceList", ScannedSourceListMemory.initializeSourceListNBT(maid));
-                NBTUtil.setTag(stack, tag);
+                bindMaid(maid, tag, maidTag, stack);
                 player.displayClientMessage(
                         Component.translatable("tooltip.maid_mana_source.source_list.bind_success", maid.getName()),
                         true
@@ -120,7 +120,7 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
                             Component.translatable("tooltip.maid_mana_source.source_list.unbind_success", tag.getString("BoundMaidName")),
                             true
                     );
-                    tag.remove("MaidInfo");
+                    stack.remove(InitDataComponent.MAID_INFO);
                     tag.remove("BoundMaidName");
                     tag.remove("BoundMaid");
                     tag.remove("SourceList");
@@ -161,7 +161,7 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack,
-                                @NotNull TooltipContext context,
+                                @NotNull Item.TooltipContext context,
                                 @NotNull List<Component> tooltip,
                                 @NotNull TooltipFlag flag) {
         super.appendHoverText(stack, context, tooltip, flag);
@@ -180,6 +180,16 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
                     "tooltip.maid_mana_source.source_list.not_bound"
             ).withStyle(ChatFormatting.ITALIC));
         }
+    }
+
+    private void bindMaid(@NotNull EntityMaid maid, @NotNull CompoundTag tag, CompoundTag maidTag, @NotNull ItemStack stack) {
+        maid.saveWithoutId(maidTag);
+        maidTag.putString("id", Objects.requireNonNull(BuiltInRegistries.ENTITY_TYPE.getKey(InitEntities.MAID.get())).toString());
+        tag.putString("BoundMaidName", maid.getName().getString());
+        tag.putUUID("BoundMaid", maid.getUUID());
+        tag.put("SourceList", ScannedSourceListMemory.initializeSourceListNBT(maid));
+        stack.set(InitDataComponent.MAID_INFO, CustomData.of(maidTag));
+        NBTUtil.setTag(stack, tag);
     }
 
     private static void updateSourceList(@NotNull ItemStack stack, BlockPos pos) {
