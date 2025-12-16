@@ -16,13 +16,15 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber(modid = MaidManaSource.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = MaidManaSource.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ScrollHandler {
     @SubscribeEvent
     public static void onScroll(InputEvent.MouseScrollingEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         if (player == null) return;
+
+        if (Keybinds.SORT_KEY == null) return;
 
         // 必须按下键位
         if (!Keybinds.SORT_KEY.isDown()) return;

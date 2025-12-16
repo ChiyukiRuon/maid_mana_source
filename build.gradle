@@ -125,7 +125,7 @@ dependencies {
 
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    compileOnly "curse.maven:touhou-little-maid-355044:6988538"
+    compileOnly "curse.maven:touhou-little-maid-355044:7307724"
     compileOnly "curse.maven:ars-nouveau-401955:6954892"
 
     // 前置
@@ -134,9 +134,9 @@ dependencies {
     runtimeOnly "curse.maven:geckolib-388172:7023453"
     runtimeOnly "curse.maven:patchouli-306770:6842247"
 
-    runtimeOnly "curse.maven:imblocker-483760:7025930"
-    runtimeOnly "curse.maven:touhou-little-maid-355044:6988538"
-    runtimeOnly "curse.maven:maid-storage-manager-1210244:7031126"
+//    runtimeOnly "curse.maven:imblocker-483760:7025930"
+    runtimeOnly "curse.maven:touhou-little-maid-355044:7307724"
+    runtimeOnly "curse.maven:maid-storage-manager-1210244:7231713"
     runtimeOnly "curse.maven:ars-nouveau-401955:6954892"
     runtimeOnly "curse.maven:applied-energistics-2-223794:7027323"
     runtimeOnly "curse.maven:ars-energistique-905641:6203425"

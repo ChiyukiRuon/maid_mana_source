@@ -1,5 +1,6 @@
 package com.chiyukiruon.maid_mana_source.client.key;
 
+import com.chiyukiruon.maid_mana_source.MaidManaSource;
 import net.minecraft.client.KeyMapping;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -9,7 +10,7 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import org.lwjgl.glfw.GLFW;
 
 @OnlyIn(Dist.CLIENT)
-@EventBusSubscriber
+@EventBusSubscriber(modid = MaidManaSource.MODID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class Keybinds {
     public static KeyMapping SORT_KEY;
 
