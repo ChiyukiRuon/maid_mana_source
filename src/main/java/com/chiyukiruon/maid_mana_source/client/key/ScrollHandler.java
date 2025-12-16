@@ -17,13 +17,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = MaidManaSource.MODID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = MaidManaSource.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ScrollHandler {
     @SubscribeEvent
     public static void onScroll(InputEvent.MouseScrollingEvent event) {
         Minecraft mc = Minecraft.getInstance();
         Player player = mc.player;
         if (player == null) return;
+
+        if (Keybinds.SORT_KEY == null) return;
 
         // 必须按下键位
         if (!Keybinds.SORT_KEY.isDown()) return;

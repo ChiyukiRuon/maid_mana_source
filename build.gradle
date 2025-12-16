@@ -181,7 +181,7 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:curios-309927:6058834")
     runtimeOnly fg.deobf("curse.maven:patchouli-306770:6164575")
 
-    runtimeOnly fg.deobf("curse.maven:imblocker-483760:6922546")
+//    runtimeOnly fg.deobf("curse.maven:imblocker-483760:6922546")
     runtimeOnly fg.deobf("curse.maven:touhou-little-maid-355044:6911704")
     runtimeOnly fg.deobf("curse.maven:maid-storage-manager-1210244:6936862")
     runtimeOnly fg.deobf("curse.maven:ars-nouveau-401955:5894609")

@@ -45,7 +45,7 @@ public class TaskSoundBehavior extends Behavior<EntityMaid> {
             // 有新的魔源罐可充能
             maid.getChatBubbleManager().removeChatBubble(chatBubbleKey);
             chatBubbleKey = maid.getChatBubbleManager().addTextChatBubble(
-                    I18nUtil.getRandomLangKey("chat_bubbles.maid_mana_source.working")
+                    I18nUtil.getRandomLangKey("chat_bubbles.maid_mana_source.working", 3)
             );
             maid.playSound(
                     InitSounds.MAID_FIND_TARGET.get(),
@@ -56,7 +56,7 @@ public class TaskSoundBehavior extends Behavior<EntityMaid> {
             // 空闲
             maid.getChatBubbleManager().removeChatBubble(chatBubbleKey);
             chatBubbleKey = maid.getChatBubbleManager().addTextChatBubble(
-                    I18nUtil.getRandomLangKey("chat_bubbles.maid_mana_source.idle")
+                    I18nUtil.getRandomLangKey("chat_bubbles.maid_mana_source.idle", 3)
             );
             maid.playSound(
                     InitSounds.MAID_IDLE.get(),

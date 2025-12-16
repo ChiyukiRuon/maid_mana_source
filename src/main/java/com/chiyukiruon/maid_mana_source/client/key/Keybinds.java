@@ -10,17 +10,20 @@ import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.glfw.GLFW;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = MaidManaSource.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = MaidManaSource.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Keybinds {
     public static KeyMapping SORT_KEY;
 
-    @SubscribeEvent
-    public static void onRegisterKeys(RegisterKeyMappingsEvent event) {
-        SORT_KEY = new KeyMapping(
-                "key.maid_mana_source.sort_source",
-                GLFW.GLFW_KEY_LEFT_ALT,
-                "key.categories.maid_mana_source"
-        );
-        event.register(SORT_KEY);
+    @Mod.EventBusSubscriber(modid = MaidManaSource.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ModBus {
+        @SubscribeEvent
+        public static void onRegisterKeys(RegisterKeyMappingsEvent event) {
+            SORT_KEY = new KeyMapping(
+                    "key.maid_mana_source.sort_source",
+                    GLFW.GLFW_KEY_LEFT_ALT,
+                    "key.categories.maid_mana_source"
+            );
+            event.register(SORT_KEY);
+        }
     }
 }
