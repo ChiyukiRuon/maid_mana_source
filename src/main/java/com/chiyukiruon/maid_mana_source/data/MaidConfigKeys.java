@@ -3,6 +3,7 @@ package com.chiyukiruon.maid_mana_source.data;
 import com.github.tartaricacid.touhoulittlemaid.api.entity.data.TaskDataKey;
 import com.github.tartaricacid.touhoulittlemaid.entity.passive.EntityMaid;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,13 @@ public class MaidConfigKeys {
         keys.put(key, new keyAndDefSupp<>(dataKey, defaultValue));
     }
 
-    public static <T> T getValue(EntityMaid maid, ResourceLocation key) {
-        keyAndDefSupp<T> pair = (keyAndDefSupp<T>) keys.get(key);
+    @Nullable
+    public static Object getValue(EntityMaid maid, @Nullable ResourceLocation key) {
+        keyAndDefSupp<?> pair = keys.get(key);
+        return pair == null ? null : getValue(maid, pair);
+    }
+
+    private static <T> T getValue(EntityMaid maid, keyAndDefSupp<T> pair) {
         return maid.getOrCreateData(pair.key, pair.defaultValue.get());
     }
 }
