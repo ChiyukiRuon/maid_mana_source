@@ -109,9 +109,11 @@ public class ItemSourceList extends AbstractStoreMaidItem implements IMaidBauble
             CompoundTag tag = NBTUtil.getOrCreateTag(stack);
             // 解绑
             if (serverPlayer.isShiftKeyDown()) {
-                BlockHitResult hitResult = (BlockHitResult) player.pick(player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE), 0.0F, false);
+                HitResult hitResult = player.pick(player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE), 0.0F, false);
 
-                if (hitResult.getType() == HitResult.Type.BLOCK && isTargetInList(hitResult.getBlockPos(), tag.getList("SourceList", Tag.TAG_COMPOUND))) {
+                if (hitResult instanceof BlockHitResult blockHit
+                        && hitResult.getType() == HitResult.Type.BLOCK
+                        && isTargetInList(blockHit.getBlockPos(), tag.getList("SourceList", Tag.TAG_COMPOUND))) {
                     return InteractionResultHolder.success(stack);
                 }
 

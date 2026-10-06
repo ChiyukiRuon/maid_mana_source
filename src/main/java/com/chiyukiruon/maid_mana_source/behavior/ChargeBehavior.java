@@ -70,8 +70,8 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
             chargeThisTime /= chargeAmount;
 
             for (BlockPos pos : knownJars) {
-                ISourceTile jar = (ISourceTile) level.getBlockEntity(pos);
-                if (jar == null) continue;
+                // Cached positions may now contain a different block entity, or no block entity.
+                if (!(level.getBlockEntity(pos) instanceof ISourceTile jar)) continue;
                 if (jar.canAcceptSource()) {
                     MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
                     doCharge(maid, level, pos, chargeThisTime);
@@ -85,11 +85,11 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
         // 单个充能
         if (chargeStrategy) {
             // 轮询模式
-            int index = maid.getBrain().getMemory(MemoryModuleRegistry.CHARGE_INDEX.get()).orElse(0);
-            BlockPos pos = knownJars.get(index % knownJars.size());
-            ISourceTile jar = (ISourceTile) level.getBlockEntity(pos);
-
-            if (jar == null) {
+            int index = Math.floorMod(
+                    maid.getBrain().getMemory(MemoryModuleRegistry.CHARGE_INDEX.get()).orElse(0),
+                    knownJars.size());
+            BlockPos pos = knownJars.get(index);
+            if (!(level.getBlockEntity(pos) instanceof ISourceTile jar)) {
                 maid.getBrain().setMemory(MemoryModuleRegistry.CHARGE_INDEX.get(), (index + 1) % knownJars.size());
                 return;
             }
@@ -103,8 +103,7 @@ public class ChargeBehavior extends Behavior<EntityMaid> {
         } else {
             // 顺序模式
             for (BlockPos pos : knownJars) {
-                ISourceTile jar = (ISourceTile) level.getBlockEntity(pos);
-                if (jar ==  null) continue;
+                if (!(level.getBlockEntity(pos) instanceof ISourceTile jar)) continue;
                 if (jar.canAcceptSource()) {
                     MaidAiUtil.setWalkAndLookTargetMemories(maid, pos, 0.5);
                     doCharge(maid, level, pos, chargeThisTime);
